@@ -1,8 +1,10 @@
+#[derive(Clone)]
 pub enum OperationTypes {
     Send(String),
     SendAndWaitForReply(String),
     MakeHTTPRequest(String),
 }
+#[derive(Clone)]
 pub struct Operation {
     id: String,
     title: String,
@@ -31,5 +33,9 @@ impl Operation {
 
     pub fn id(&self) -> &str {
         self.id.as_ref()
+    }
+    pub fn get_selected_option(&self, option_index: usize) -> Operation {
+        let operation = self.operation_options[option_index].clone();
+        return operation;
     }
 }

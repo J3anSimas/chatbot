@@ -22,7 +22,10 @@ impl UserSendsMessageToBot {
             .session_data_gateway
             .get_active_session_by_user_id(user_id)
         {
-            Option::Some(session) => session,
+            Option::Some(session) => {
+                let option: usize = message.parse().expect("Failed to parse message");
+                self.session_data_gateway.update_session(session, option)
+            }
             Option::None => return self.session_data_gateway.create_session(user_id),
         };
 
@@ -64,6 +67,15 @@ mod tests {
                 vec![],
             );
             return Session::new("new_id", operation, user_id, true);
+        }
+        fn update_session(
+            &self,
+            mut session: Session,
+            option: usize,
+        ) -> crate::entities::session::Session {
+            let mut operation = session.current_operation().get_selected_option(option);
+            session.set_current_operation(operation);
+            return session;
         }
     }
     #[test]
