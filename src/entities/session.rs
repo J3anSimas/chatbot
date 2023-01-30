@@ -1,5 +1,6 @@
 use super::operation;
 
+#[derive(Clone)]
 pub struct Session {
     id: String,
     current_operation: operation::Operation,
@@ -32,5 +33,21 @@ impl Session {
 
     pub fn set_current_operation(&mut self, current_operation: operation::Operation) {
         self.current_operation = current_operation;
+    }
+
+    pub fn user_id(&self) -> &str {
+        self.user_id.as_ref()
+    }
+
+    pub fn active(&self) -> bool {
+        self.active
+    }
+
+    pub fn set_active(&mut self, active: bool) {
+        self.active = active;
+    }
+
+    pub fn active_mut(&self) -> &bool {
+        &self.active
     }
 }

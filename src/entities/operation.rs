@@ -38,4 +38,11 @@ impl Operation {
         let operation = self.operation_options[option_index].clone();
         return operation;
     }
+    pub fn execute(&self) -> (String, bool) {
+        match &self.operation_type {
+            OperationTypes::Send(message) => (message.clone(), true),
+            OperationTypes::SendAndWaitForReply(message) => (message.clone(), false),
+            OperationTypes::MakeHTTPRequest(url) => (url.clone(), true),
+        }
+    }
 }
